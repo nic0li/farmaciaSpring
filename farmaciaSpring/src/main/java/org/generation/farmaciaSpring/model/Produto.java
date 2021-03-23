@@ -41,6 +41,12 @@ public class Produto {
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Marca marca;
+	
+	@NotNull
+	private long quantidade;
+	
+	@NotNull
+	private double preco;
 
 	public long getId() {
 		return id;
@@ -88,6 +94,22 @@ public class Produto {
 
 	public void setMarca(Marca marca) {
 		this.marca = marca;
+	}
+
+	public long getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(long quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 	
 	
