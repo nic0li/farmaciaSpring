@@ -43,17 +43,17 @@ public class MarcaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Marca> post (@RequestBody Marca marca) {
+	public ResponseEntity<Marca> post(@RequestBody Marca marca) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(marca));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Marca> put (@RequestBody Marca marca) {
+	public ResponseEntity<Marca> put(@RequestBody Marca marca) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(marca));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete (@PathVariable long id) {
+	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
 

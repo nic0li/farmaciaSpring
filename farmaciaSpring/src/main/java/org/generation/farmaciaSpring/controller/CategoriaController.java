@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.generation.farmaciaSpring.model.Categoria;
 import org.generation.farmaciaSpring.repository.CategoriaRepository;
+import org.generation.farmaciaSpring.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/categorias")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
 	
 	@Autowired
 	private CategoriaRepository repository;
+	
+	@Autowired
+	private CategoriaService service;	
 	
 	@GetMapping
 	public ResponseEntity<List<Categoria>> getAll() {
@@ -43,17 +47,23 @@ public class CategoriaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> post (@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> post(@RequestBody Categoria categoria) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
 	
+	@PutMapping("/categoriaProduto/categoria/{categoriaId}/produto/{produtoId}")
+	public ResponseEntity<Categoria> postCategoriaProduto(@PathVariable long categoriaId,@PathVariable long produtoId) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(service.cadastroProdutoCategoria(categoriaId, produtoId));
+	}
+	
 	@PutMapping
-	public ResponseEntity<Categoria> put (@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> put(@RequestBody Categoria categoria) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(categoria));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete (@PathVariable long id) {
+	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
 

@@ -2,12 +2,11 @@ package org.generation.farmaciaSpring.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,12 +25,10 @@ public class Categoria {
 	@Size(min = 1, max = 100)
 	private String nome;
 	
-	@NotNull
-	@Size(min = 1, max = 250)
 	private String descricao;
 	
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("categoria")
+	@ManyToMany(mappedBy = "categoria")
+	@JsonIgnoreProperties({"categoria"})
 	private List<Produto> produto;
 
 	public long getId() {
@@ -66,6 +63,4 @@ public class Categoria {
 		this.produto = produto;
 	}
 	
-	
-
 }

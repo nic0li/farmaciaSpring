@@ -42,18 +42,38 @@ public class ProdutoController {
 		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
+	@GetMapping("/maiorPreco/{preco}")
+	public ResponseEntity<List<Produto>> getAllByPrecoMaior(@PathVariable int preco) {
+		return ResponseEntity.ok(repository.findAllByPrecoGreaterThanEqual(preco));
+	}
+	
+	@GetMapping("/menorPreco/{preco}")
+	public ResponseEntity<List<Produto>> getAllByPrecoMenor(@PathVariable int preco) {
+		return ResponseEntity.ok(repository.findAllByPrecoLessThanEqual(preco));
+	}
+	
+	@GetMapping("/ativo/{ativo}")
+	public ResponseEntity<List<Produto>> getAllByAtivo(@PathVariable boolean ativo) {
+		return ResponseEntity.ok(repository.findAllByAtivo(ativo));
+	}
+	
+	@GetMapping("/marca/{marca}")
+	public ResponseEntity<List<Produto>> getAllProdutoByCategoria(@PathVariable String marca) {
+		return ResponseEntity.ok(repository.findAllProdutoByCategoria(marca));
+	}
+	
 	@PostMapping
-	public ResponseEntity<Produto> post (@RequestBody Produto produto) {
+	public ResponseEntity<Produto> post(@RequestBody Produto produto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(produto));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Produto> put (@RequestBody Produto produto) {
+	public ResponseEntity<Produto> put(@RequestBody Produto produto) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(produto));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete (@PathVariable long id) {
+	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
 

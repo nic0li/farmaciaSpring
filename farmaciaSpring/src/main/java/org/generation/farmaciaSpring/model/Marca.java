@@ -26,8 +26,6 @@ public class Marca {
 	@Size(min = 1, max = 100)
 	private String nome;
 	
-	@NotNull
-	@Size(min = 1, max = 250)
 	private String descricao;
 	
 	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
@@ -66,6 +64,4 @@ public class Marca {
 		this.produto = produto;
 	}
 	
-	
-
 }

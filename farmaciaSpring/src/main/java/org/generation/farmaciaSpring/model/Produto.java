@@ -1,11 +1,15 @@
 package org.generation.farmaciaSpring.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,26 +31,27 @@ public class Produto {
 	@Size(min = 1, max = 100)
 	private String nome;
 	
-	@NotNull
-	@Size(min = 1, max = 250)
 	private String descricao;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 	
-	@ManyToOne
-	@JsonIgnoreProperties("produto")
-	private Categoria categoria;
+	private float preco;
 	
+	private int quantidade;
+	
+	private boolean ativo;	
+
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Marca marca;
 	
-	@NotNull
-	private long quantidade;
-	
-	@NotNull
-	private double preco;
+	@ManyToMany
+	@JoinTable(name = "tb_categoria_produto",
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	@JsonIgnoreProperties({"produto"})
+	private List<Categoria> categoria;
 
 	public long getId() {
 		return id;
@@ -80,12 +85,28 @@ public class Produto {
 		this.data = data;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public float getPreco() {
+		return preco;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setPreco(float preco) {
+		this.preco = preco;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public Marca getMarca() {
@@ -96,22 +117,12 @@ public class Produto {
 		this.marca = marca;
 	}
 
-	public long getQuantidade() {
-		return quantidade;
+	public List<Categoria> getCategoria() {
+		return categoria;
 	}
 
-	public void setQuantidade(long quantidade) {
-		this.quantidade = quantidade;
+	public void setCategoria(List<Categoria> categoria) {
+		this.categoria = categoria;
 	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
-	
-	
 
 }
